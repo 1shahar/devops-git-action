@@ -1,18 +1,24 @@
-name: send email on push
+name: mail on push 
+
 on:
   push:
-    branches:
-      - main 
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
 
 jobs:
-  send_email:
+
+  gmail-send:
     runs-on: ubuntu-latest
-    needs: test
     steps:
-      - name: Send Email
-        uses: cinotify/github-action@main
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: cinotify/github-action@main
         with:
-          to: "shahar00001@gmail.com"
-          subject: " mail when push "
-          body: "<em>there was a push to main.</em>"
-          type: "text/html"
+          to: 'example@example.com'
+          subject: 'building main'
+          body: '<em>This is a notification from GitHub actions.</em>'
+          type: 'text/html'
+          attachment: 'artifacts.zip'
+
